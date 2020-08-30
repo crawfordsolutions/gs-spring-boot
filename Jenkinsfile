@@ -15,7 +15,7 @@ node {
 	 
         // Use openjdk to avoid greedy Oracle license prompt
         //env.JAVA_HOME="/usr/java/jdk-11.0.1"
-        env.JAVA_HOME="/usr/local/opt/openjdk@11/bin/java"
+        env.JAVA_HOME="/usr/local/opt/openjdk@11"
 		env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
         sh 'java -version'
         
