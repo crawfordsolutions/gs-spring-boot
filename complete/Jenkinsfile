@@ -6,7 +6,13 @@
  * @author jcrawford
  *
  */
-		
+
+	properties([
+    pipelineTriggers([
+        [$class: "SCMTrigger", scmpoll_spec: "H/5 * * * *"],
+    ])
+])
+
 node {
 	// Limit build concurrency to 1 per branch to fix "Could not perform a local checkout" (workspace@2) errors
 	//properties([disableConcurrentBuilds()])
