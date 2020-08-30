@@ -12,9 +12,10 @@ pipeline {
 } // poll every 15 minutes
 
 
-node {
+//node {
+stages {
 	// Limit build concurrency to 1 per branch to fix "Could not perform a local checkout" (workspace@2) errors
-	properties([disableConcurrentBuilds()])
+	//properties([disableConcurrentBuilds()])
   
 
 
@@ -29,24 +30,29 @@ node {
         
 
 
-		stage ('Checkout') {
+		//stage ('Checkout') {
+		stages {
+			stage ('Checkout') {
 			// Checkout using the SCM object to pass credential token w/o a password. 	    
 			// See:  https://stackoverflow.com/questions/38769976/is-it-possible-to-git-merge-push-using-jenkins-pipeline.
-			sh 'git config --global credential.helper cache'
-			sh 'git config --global push.default simple'
-			checkout([
-				$class: 'GitSCM',
-				branches: scm.branches,
-				extensions: scm.extensions + [[$class: 'CleanCheckout']],
-				userRemoteConfigs: scm.userRemoteConfigs
-				])
-		}
-	       
+				steps {	
+				sh 'git config --global credential.helper cache'
+				sh 'git config --global push.default simple'
+				checkout([
+					$class: 'GitSCM',
+					branches: scm.branches,
+					extensions: scm.extensions + [[$class: 'CleanCheckout']],
+					userRemoteConfigs: scm.userRemoteConfigs
+					])
+				}
+			}
 		stage ('Build') {
-			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+			steps {
+				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
 			sh "${mvnHome}/bin/mvn -f complete/pom.xml install -B"
 			}
-
+		}
+			}
 		// stage ('Post') {
 		// 	def pom = readMavenPom file: 'pom.xml'
 		// 	def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
