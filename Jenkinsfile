@@ -41,7 +41,8 @@ node {
 			// replace "-SNAPSHOT" with the Jenkins build number and push the tag to Git.
 			// See:  https://www.cloudbees.com/blog/new-way-do-continuous-delivery-maven-and-jenkins-pipeline
     		//sh "git fetch --tags"
-    		sh "${mvnHome}/bin/mvn -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform -B"
+    		//sh "${mvnHome}/bin/mvn -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform -B"
+			sh "${mvnHome}/bin/mvn -DreleaseVersion=0.0.1-SNAPSHOT -DdevelopmentVersion=0.0.2 -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform -B"
 			//sh "git push --verbose --force origin refs/tags/${pom.artifactId}-${version}:refs/tags/${pom.artifactId}-${version}"
 		}
 
