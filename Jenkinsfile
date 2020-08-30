@@ -12,11 +12,11 @@ node {
 	properties([disableConcurrentBuilds()])
   
 	try {
-        notifyBuild('STARTED') 
 	 
         // Use openjdk to avoid greedy Oracle license prompt
-        env.JAVA_HOME="/usr/java/jdk-11.0.1"
-        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+        //env.JAVA_HOME="/usr/java/jdk-11.0.1"
+        env.JAVA_HOME="/usr/local/opt/openjdk@11/bin/java"
+		env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
         sh 'java -version'
         
 		stage ('Checkout') {
@@ -33,7 +33,7 @@ node {
 		}
 	       
 		stage ('Build') {
-			def mvnHome = tool 'apache-maven-3.3.9'
+			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
 			def pom = readMavenPom file: 'pom.xml'
 			def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
 			// To avoid an infinite build loop in Git and merge conflicts, we run a Maven release build 
@@ -66,36 +66,3 @@ node {
 } // End node
 
     
-def notifyBuild(String buildStatus = 'STARTED') {
-// build status of null means successful
-buildStatus =  buildStatus ?: 'SUCCESSFUL'
-
-// Default values
-def colorName = 'RED'
-def colorCode = '#FF0000'
-def subject = "${buildStatus}: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}"
-def summary = "${subject} (${env.BUILD_URL})"
-def details = """${env.JOB_NAME} - Build #${env.BUILD_NUMBER}:
-Check console output at: ${env.BUILD_URL}"""
-
-// Override default values based on build status
-if (buildStatus == 'STARTED') {
-	color = 'YELLOW'
-    colorCode = '#FFFF00'
-  } else if (buildStatus == 'SUCCESSFUL') {
-    color = 'GREEN'
-    colorCode = '#00FF00'
-  } else {
-    color = 'RED'
-    colorCode = '#FF0000'
-}
-
-// Send notifications
-slackSend (color: colorCode, message: summary)
-
-emailext(
-	subject: subject,
-    body: details,
-    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
-    )
-}
