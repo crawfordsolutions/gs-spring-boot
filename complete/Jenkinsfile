@@ -62,7 +62,8 @@ stages {
 		// 	archiveArtifacts artifacts: '**/target/*.jar,**/target/*.tar,**/target/*.pom', excludes: '**/target/*sources*, **/target/*info*', onlyIfSuccessful: true
 		//}         
 		 
-	} catch (e) {
+	} 
+	}catch (e) {
     	// If there was an exception thrown, the build failed
     	currentBuild.result = "FAILED"
     throw e
