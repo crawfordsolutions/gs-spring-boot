@@ -18,6 +18,10 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+    <scm>        
+    <connection>scm:git:https://github.com/crawfordsolutions/gs-spring-boot.git</connection>
+    </scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
