@@ -46,14 +46,14 @@ node {
 			//sh "git push --verbose --force origin refs/tags/${pom.artifactId}-${version}:refs/tags/${pom.artifactId}-${version}"
 		}
 
-		stage ('Post') {
-			def pom = readMavenPom file: 'pom.xml'
-			def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
-			if (fileExists("${WORKSPACE}/target/checkout/target/${pom.artifactId}-${version}.tar")) {
-			    sh "mkdir -p /var/www/html/${pom.artifactId}"
-    			sh "cp -p ${WORKSPACE}/target/checkout/target/${pom.artifactId}-${version}.tar /var/www/html/${pom.artifactId}/"
-			}			
-			archiveArtifacts artifacts: '**/target/*.jar,**/target/*.tar,**/target/*.pom', excludes: '**/target/*sources*, **/target/*info*', onlyIfSuccessful: true
+		// stage ('Post') {
+		// 	def pom = readMavenPom file: 'pom.xml'
+		// 	def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
+		// 	if (fileExists("${WORKSPACE}/target/checkout/target/${pom.artifactId}-${version}.tar")) {
+		// 	    sh "mkdir -p /var/www/html/${pom.artifactId}"
+    	// 		sh "cp -p ${WORKSPACE}/target/checkout/target/${pom.artifactId}-${version}.tar /var/www/html/${pom.artifactId}/"
+		// 	}			
+		// 	archiveArtifacts artifacts: '**/target/*.jar,**/target/*.tar,**/target/*.pom', excludes: '**/target/*sources*, **/target/*info*', onlyIfSuccessful: true
 		}         
 		 
 	} catch (e) {
