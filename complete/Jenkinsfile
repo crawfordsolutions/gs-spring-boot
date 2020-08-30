@@ -51,7 +51,7 @@ stages {
 			sh "${mvnHome}/bin/mvn -f complete/pom.xml install -B"
 			}
 		}
-			}
+			
 		// stage ('Post') {
 		// 	def pom = readMavenPom file: 'pom.xml'
 		// 	def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
@@ -63,12 +63,12 @@ stages {
 		//}         
 		 
 	} 
-	}catch (e) {
+	 catch (e) {
     	// If there was an exception thrown, the build failed
     	currentBuild.result = "FAILED"
     throw e
   	} finally {
     // Success or failure, always send notifications
 sh 'echo "build done"'  }
-} // End node
+//} // End node
 }    
