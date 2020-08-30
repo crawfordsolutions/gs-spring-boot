@@ -11,6 +11,7 @@ pipeline {
 	triggers { pollSCM('H/1 * * * *') 
 } // poll every 15 minutes
 
+	try {
 
 //node {
 stages {
@@ -20,7 +21,6 @@ stages {
 
 
 
-	try {
 	 
         // Use openjdk to avoid greedy Oracle license prompt
         //env.JAVA_HOME="/usr/java/jdk-11.0.1"
