@@ -6,21 +6,14 @@
  * @author jcrawford
  *
  */
-pipeline {
-	agent any
-	triggers { pollSCM('H/1 * * * *') 
-} // poll every 15 minutes
-
-	try {
-
-//node {
-stages {
+		
+node {
 	// Limit build concurrency to 1 per branch to fix "Could not perform a local checkout" (workspace@2) errors
-	//properties([disableConcurrentBuilds()])
+	properties([disableConcurrentBuilds()])
   
 
-
-
+  
+	try {
 	 
         // Use openjdk to avoid greedy Oracle license prompt
         //env.JAVA_HOME="/usr/java/jdk-11.0.1"
@@ -28,30 +21,24 @@ stages {
 		env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
         sh 'java -version'
         
-
-
-		//stage ('Checkout') {
-			stage ('Checkout') {
+		stage ('Checkout') {
 			// Checkout using the SCM object to pass credential token w/o a password. 	    
 			// See:  https://stackoverflow.com/questions/38769976/is-it-possible-to-git-merge-push-using-jenkins-pipeline.
-				steps {	
-				sh 'git config --global credential.helper cache'
-				sh 'git config --global push.default simple'
-				checkout([
-					$class: 'GitSCM',
-					branches: scm.branches,
-					extensions: scm.extensions + [[$class: 'CleanCheckout']],
-					userRemoteConfigs: scm.userRemoteConfigs
-					])
-				}
-			}
+			sh 'git config --global credential.helper cache'
+			sh 'git config --global push.default simple'
+			checkout([
+				$class: 'GitSCM',
+				branches: scm.branches,
+				extensions: scm.extensions + [[$class: 'CleanCheckout']],
+				userRemoteConfigs: scm.userRemoteConfigs
+				])
+		}
+	       
 		stage ('Build') {
-			steps {
-				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
 			sh "${mvnHome}/bin/mvn -f complete/pom.xml install -B"
 			}
-		}
-			
+
 		// stage ('Post') {
 		// 	def pom = readMavenPom file: 'pom.xml'
 		// 	def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
@@ -62,14 +49,13 @@ stages {
 		// 	archiveArtifacts artifacts: '**/target/*.jar,**/target/*.tar,**/target/*.pom', excludes: '**/target/*sources*, **/target/*info*', onlyIfSuccessful: true
 		//}         
 		 
-	} 
-	 catch (e) {
+	} catch (e) {
     	// If there was an exception thrown, the build failed
     	currentBuild.result = "FAILED"
     throw e
   	} finally {
     // Success or failure, always send notifications
 sh 'echo "build done"'  }
-//} // End node
-} 
-}
+} // End node
+
+    
