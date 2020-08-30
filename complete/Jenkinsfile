@@ -31,7 +31,6 @@ stages {
 
 
 		//stage ('Checkout') {
-		stages {
 			stage ('Checkout') {
 			// Checkout using the SCM object to pass credential token w/o a password. 	    
 			// See:  https://stackoverflow.com/questions/38769976/is-it-possible-to-git-merge-push-using-jenkins-pipeline.
