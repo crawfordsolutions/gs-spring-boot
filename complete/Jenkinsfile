@@ -9,7 +9,7 @@
 
 	properties([
     pipelineTriggers([
-        [$class: "SCMTrigger", scmpoll_spec: "H/5 * * * *"],
+        [$class: "SCMTrigger", scmpoll_spec: "H/1 * * * *"],
     ])
 ])
 
