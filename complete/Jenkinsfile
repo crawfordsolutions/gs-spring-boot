@@ -9,7 +9,7 @@
 		
 node {
 	// Limit build concurrency to 1 per branch to fix "Could not perform a local checkout" (workspace@2) errors
-	properties([disableConcurrentBuilds()])
+	//properties([disableConcurrentBuilds()])
   
 
   
