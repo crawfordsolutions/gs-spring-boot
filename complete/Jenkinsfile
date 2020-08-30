@@ -6,13 +6,17 @@
  * @author jcrawford
  *
  */
-		
+pipeline {
+	agent any
+	triggers { pollSCM('H/1 * * * *') 
+} // poll every 15 minutes
+
+
 node {
 	// Limit build concurrency to 1 per branch to fix "Could not perform a local checkout" (workspace@2) errors
 	properties([disableConcurrentBuilds()])
   
-triggers { pollSCM('H/1 * * * *') 
-} // poll every 15 minutes
+
 
 
 	try {
@@ -23,6 +27,8 @@ triggers { pollSCM('H/1 * * * *')
 		env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
         sh 'java -version'
         
+
+
 		stage ('Checkout') {
 			// Checkout using the SCM object to pass credential token w/o a password. 	    
 			// See:  https://stackoverflow.com/questions/38769976/is-it-possible-to-git-merge-push-using-jenkins-pipeline.
@@ -59,5 +65,4 @@ triggers { pollSCM('H/1 * * * *')
     // Success or failure, always send notifications
 sh 'echo "build done"'  }
 } // End node
-
-    
+}    
