@@ -34,15 +34,15 @@ node {
 	       
 		stage ('Build') {
 			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
-			def pom = readMavenPom file: 'pom.xml'
-			def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
+			//def pom = readMavenPom file: 'pom.xml'
+			//def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
 			// To avoid an infinite build loop in Git and merge conflicts, we run a Maven release build 
 			// which does NOT bump the SNAPAHOT version.  Instead, we perform a release build for EVERY build, 
 			// replace "-SNAPSHOT" with the Jenkins build number and push the tag to Git.
 			// See:  https://www.cloudbees.com/blog/new-way-do-continuous-delivery-maven-and-jenkins-pipeline
-    		sh "git fetch --tags"
+    		//sh "git fetch --tags"
     		sh "${mvnHome}/bin/mvn -DreleaseVersion=${version} -DdevelopmentVersion=${pom.version} -DpushChanges=false -DlocalCheckout=true -DpreparationGoals=initialize release:prepare release:perform -B"
-			sh "git push --verbose --force origin refs/tags/${pom.artifactId}-${version}:refs/tags/${pom.artifactId}-${version}"
+			//sh "git push --verbose --force origin refs/tags/${pom.artifactId}-${version}:refs/tags/${pom.artifactId}-${version}"
 		}
 
 		stage ('Post') {
