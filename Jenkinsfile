@@ -61,8 +61,7 @@ node {
     throw e
   	} finally {
     // Success or failure, always send notifications
-    notifyBuild(currentBuild.result)
-  }
+sh 'echo "build done"'  }
 } // End node
 
     
