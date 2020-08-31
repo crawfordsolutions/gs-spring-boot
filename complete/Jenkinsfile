@@ -62,8 +62,8 @@ node {
 			echo e.getMessage()
     		currentBuild.result = 'SUCCESS'
 				//step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-  				//if (currentBuild.result == 'UNSTABLE')
-    			//currentBuild.result = 'FAILURE'
+  				if (currentBuild.result == 'UNSTABLE')
+    			currentBuild.result = 'SUCCESS'
   				//throw err
 			} finally {
       		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
