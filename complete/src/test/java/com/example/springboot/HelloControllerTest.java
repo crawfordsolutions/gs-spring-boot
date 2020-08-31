@@ -27,13 +27,10 @@ public class HelloControllerTest {
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
 
-	@Test
-	public void itShouldThrowNullPointerExceptionWhenBlahBlah() {
-		assertThrows(NullPointerException.class,
-				()->{
-				//do whatever you want to do here
-				//ex : objectName.thisMethodShoulThrowNullPointerExceptionForNullParameter(null);
-				});
+	@Test(expected = NullPointerException.class)
+	public void whenExceptionThrown_thenExpectationSatisfied() {
+	    String test = null;
+	    test.length();
 	}
 }
 
