@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.junit.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,10 +27,13 @@ public class HelloControllerTest {
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void whenExceptionThrown_thenExpectationSatisfied() {
-	    String test = null;
-	    test.length();
+	@Test
+	public void itShouldThrowNullPointerExceptionWhenBlahBlah() {
+		assertThrows(NullPointerException.class,
+				()->{
+				//do whatever you want to do here
+				objectName.thisMethodShoulThrowNullPointerExceptionForNullParameter(null);
+				});
 	}
 }
 
