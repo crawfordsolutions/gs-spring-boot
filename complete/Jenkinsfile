@@ -41,38 +41,38 @@ node {
 				])
 		}
 	       
-		stage ('Compile') {
+// 		stage ('Compile') {
 
-			try {
-				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
-				sh "${mvnHome}/bin/mvn -f complete/pom.xml compile -B"
-			} catch(err) {
-			echo err.getMessage()
-        	currentBuild.result = 'FAILURE'
-			}
-}
-		stage ('Test') {
+// 			try {
+// 				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+// 				sh "${mvnHome}/bin/mvn -f complete/pom.xml compile -B"
+// 			} catch(err) {
+// 			echo err.getMessage()
+//         	currentBuild.result = 'FAILURE'
+// 			}
+// }
+		stage ('Verify') {
 
 			 try {
-				sh "${mvnHome}/bin/mvn -f complete/pom.xml test -B"
+				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
     		} catch(err) {
         		//step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-				//echo err.getMessage()
+				echo err.getMessage()
   				//if (currentBuild.result == 'UNSTABLE')
-    			//currentBuild.result = 'FAILURE'
+    			currentBuild.result = 'FAILURE'
   				//throw err
 			}
 		}
-		stage ('Package') {
+		// stage ('Package') {
 
-			try {
-				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
-				sh "${mvnHome}/bin/mvn -f complete/pom.xml package -B"
-			} catch(err) {
-			echo err.getMessage()
-        	currentBuild.result = 'FAILURE'
-			}
-		}
+		// 	try {
+		// 		def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+		// 		sh "${mvnHome}/bin/mvn -f complete/pom.xml package -B"
+		// 	} catch(err) {
+		// 	echo err.getMessage()
+        // 	currentBuild.result = 'FAILURE'
+		// 	}
+		// }
 }
 
 			 
