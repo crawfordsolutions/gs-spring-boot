@@ -59,10 +59,12 @@ node {
     } catch (ArithmeticException | ArrayIndexOutOfBoundsException err) {
 		currentBuild.result = 'FAILURE'
 		echo err.getMessag()
-			} finally {
+	} finally {
       		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-			}
-		}
+	}
+	}
+
+//    } catch(hudson.AbortException) {
 
 
 
