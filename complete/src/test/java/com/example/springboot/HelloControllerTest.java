@@ -28,12 +28,15 @@ public class HelloControllerTest {
 	}
 
 	@Test
-	public void itShouldThrowNullPointerExceptionWhenBlahBlah() {
-		assertThrows(NullPointerException.class,
-				()->{
-				//do whatever you want to do here
-				objectName.thisMethodShoulThrowNullPointerExceptionForNullParameter(null);
-				});
+	public void whenDerivedExceptionThrown_thenAssertionSucceds() {
+	    Exception exception = assertThrows(RuntimeException.class, () -> {
+	        Integer.parseInt("1a");
+	    });
+	 
+	    String expectedMessage = "For input string";
+	    String actualMessage = exception.getMessage();
+	 
+	    assertTrue(actualMessage.contains(expectedMessage));
 	}
 }
 
