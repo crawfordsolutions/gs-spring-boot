@@ -30,9 +30,14 @@ public class HelloControllerIT {
     }
 
     @Test
-    public void getHello() throws Exception {
-        ResponseEntity<String> response = template.getForEntity(base.toString(),
-                String.class);
-        assertThat(response.getBody()).isEqualTo("Greetings from Spring Boot!");
-    }
+	public void whenExceptionThrown_thenAssertionSucceeds() {
+	    Exception exception = assertThrows(NumberFormatException.class, () -> {
+	        Integer.parseInt("1a");
+	    });
+	 
+	    String expectedMessage = "For input string";
+	    String actualMessage = exception.getMessage();
+	 
+	    assertTrue(actualMessage.contains(expectedMessage));
+	}
 }
