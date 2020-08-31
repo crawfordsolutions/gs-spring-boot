@@ -55,7 +55,7 @@ node {
 
 			 try {
 				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
-				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B -X"
+				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
     		//} catch(err) {
         	} catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
 			echo err.getMessage()
