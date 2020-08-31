@@ -13,9 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import org.junit.Assert.fail;
-
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HelloControllerTest {
@@ -30,9 +27,13 @@ public class HelloControllerTest {
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
 
-	@Test(expected=NullPointerException.class)
-	public void testNullInput() {
-		fail(nullString.indexOf(3));
+	@Test
+	public void itShouldThrowNullPointerExceptionWhenBlahBlah() {
+		assertThrows(NullPointerException.class,
+				()->{
+				//do whatever you want to do here
+				//ex : objectName.thisMethodShoulThrowNullPointerExceptionForNullParameter(null);
+				});
 	}
 }
 
