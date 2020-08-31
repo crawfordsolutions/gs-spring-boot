@@ -60,7 +60,7 @@ node {
 				echo err.getMessage()
   				//if (currentBuild.result == 'UNSTABLE')
     			//currentBuild.result = 'FAILURE'
-  				//throw err
+  				throw err
 			}
 		}
 		stage ('Package') {
