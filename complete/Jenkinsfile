@@ -52,31 +52,30 @@ node {
 // 			}
 // }
 		stage ('Verify') {
-
-
     try {
         // Any maven phase that that triggers the test phase can be used here.
     			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
 				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
-    } catch(hudson.AbortException err) {
-	//error "Program failed, please read logs..."
-    error "jeff error is: ${err}"
-	if (currentBuild.result == 'UNSTABLE')
-                currentBuild.result = 'SUCCESS'
-
-  step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-//   if (currentBuild.result == 'UNSTABLE')
-//     currentBuild.result = 'FAILURE'
-  //throw err
-}
-
-
-        	//} catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
-			// } finally {
-      		// step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-			// }
-
+    } catch (ArithmeticException | ArrayIndexOutOfBoundsException err) {
+		currentBuild.result = 'FAILURE'
+		echo err.getMessag()
+			} finally {
+      		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+			}
 		}
+
+
+
+// script {
+//         try {
+//             sh "sudo docker rmi frontend-test"
+//         } catch (err) {
+//             echo err.getMessage()
+//             echo "Error detected, but we will continue."
+//         }
+//         ...continue with other code...
+// }
+
 
 
 
