@@ -20,12 +20,6 @@ public class HelloControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
-	static void test(String[] args) {
-		def arr = new int[3];
-		arr[5] = 5;
-	 } 
-  
-
 	@Test
 	public void getHello() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
