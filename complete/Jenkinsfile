@@ -59,7 +59,7 @@ node {
     			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
 				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
     } catch(err) {
-	error "Program failed, please read logs..."
+	//error "Program failed, please read logs..."
     error "jeff error is: ${err}"
 
   step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
