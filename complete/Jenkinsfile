@@ -62,12 +62,11 @@ node {
   				//if (currentBuild.result == 'UNSTABLE')
     			currentBuild.result = 'FAILURE'
   				//throw err
+			} finally {
+      		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
 			}
-		}
 
-		stage ('Publish Tests') {
-      	step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-  } 
+		}
 
 
 		// stage ('Package') {
