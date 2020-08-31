@@ -20,7 +20,7 @@ node {
   
 
   
-	try {
+	
 	 
         // Use openjdk to avoid greedy Oracle license prompt
         //env.JAVA_HOME="/usr/java/jdk-11.0.1"
@@ -41,28 +41,54 @@ node {
 				])
 		}
 	       
-		stage ('Build') {
-			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
-			sh "${mvnHome}/bin/mvn -f complete/pom.xml install -B"
+		stage "Compile"
+
+			try {
+				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+				sh "${mvnHome}/bin/mvn -f complete/pom.xml compile -B"
+			} catch(err) {
+			echo err.getMessage()
+        	currentBuild.result = 'FAILURE'
 			}
 
-		// stage ('Post') {
-		// 	def pom = readMavenPom file: 'pom.xml'
-		// 	def version = pom.version.replace("-SNAPSHOT", ".${currentBuild.number}")       
-		// 	if (fileExists("${WORKSPACE}/target/checkout/target/${pom.artifactId}-${version}.tar")) {
-		// 	    sh "mkdir -p /var/www/html/${pom.artifactId}"
-    	// 		sh "cp -p ${WORKSPACE}/target/checkout/target/${pom.artifactId}-${version}.tar /var/www/html/${pom.artifactId}/"
-		// 	}			
-		// 	archiveArtifacts artifacts: '**/target/*.jar,**/target/*.tar,**/target/*.pom', excludes: '**/target/*sources*, **/target/*info*', onlyIfSuccessful: true
-		//}         
+		stage "Test"
+
+			 try {
+        		sh 'mvn test -B'
+    		} catch(err) {
+        		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+  				if (currentBuild.result == 'UNSTABLE')
+    			currentBuild.result = 'FAILURE'
+  				throw err
+			}
+
+		stage "Package"
+
+			try {
+				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+				sh "${mvnHome}/bin/mvn -f complete/pom.xml package -B"
+			} catch(err) {
+			echo err.getMessage()
+        	currentBuild.result = 'FAILURE'
+			}
+}
+			 
+			 
+			//  try {
+			// def mvnHome = '/Users/main/work/apache-maven-3.6.3'
+			// sh "${mvnHome}/bin/mvn -f complete/pom.xml test -B"
+			//     } catch (err) {
+			//         echo err.getMessage()
+        	// 		currentBuild.result = 'FAILURE'
+			// }
 		 
-	} catch (e) {
-    	// If there was an exception thrown, the build failed
-    	currentBuild.result = "FAILED"
-    throw e
-  	} finally {
+	// } catch (e) {
+    // 	// If there was an exception thrown, the build failed
+    // 	currentBuild.result = "FAILED"
+    // throw e
+//  	} finally {
     // Success or failure, always send notifications
-sh 'echo "build done"'  }
-} // End node
+//sh 'echo "build done"'  }
+//} // End node
 
     
