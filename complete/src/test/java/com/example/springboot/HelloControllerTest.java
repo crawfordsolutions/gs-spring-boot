@@ -24,15 +24,14 @@ public class HelloControllerTest {
 	public void getHello() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				//.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
-				.andExpect(content().string(equalTo(null)));
-			}
+				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
+	}
 
-	// @Test(expected = NullPointerException.class)
-	// public void whenExceptionThrown_thenExpectationSatisfied() {
-	//     String test = null;
-	//     test.length();
-	// }
+	@Test(expected = NullPointerException.class)
+	public void whenExceptionThrown_thenExpectationSatisfied() {
+	    String test = null;
+	    test.length();
+	}
 }
 
 
