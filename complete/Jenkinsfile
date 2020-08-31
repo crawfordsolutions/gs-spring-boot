@@ -59,7 +59,7 @@ node {
     //} catch (ArithmeticException | ArrayIndexOutOfBoundsException err) {
 	} catch (Exception err) {
 	echo "Caught: ${err}"
-	currentBuild.result = 'SUCCESS'
+	currentBuild.result = 'FAILURE'
 	//echo err.getMessage()
 	} finally {
 		//echo hudson.AbortException
