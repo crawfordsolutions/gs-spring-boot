@@ -13,9 +13,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HelloControllerIT {
 
@@ -33,14 +30,9 @@ public class HelloControllerIT {
     }
 
     @Test
-	public void whenExceptionThrown_thenAssertionSucceeds() {
-	    Exception exception = assertThrows(NumberFormatException.class, () -> {
-	        Integer.parseInt("1a");
-	    });
-	 
-	    String expectedMessage = "For input string";
-	    String actualMessage = exception.getMessage();
-	 
-	    assertTrue(actualMessage.contains(expectedMessage));
-	}
+    public void getHello() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(base.toString(),
+                String.class);
+        assertThat(response.getBody()).isEqualTo("Greetings from Spring Boot!");
+    }
 }
