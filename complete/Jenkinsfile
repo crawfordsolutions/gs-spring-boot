@@ -54,7 +54,7 @@ node {
 		stage ('Test') {
 
 			 try {
-        		sh 'mvn test -B'
+				sh "${mvnHome}/bin/mvn -f complete/pom.xml test -B"
     		} catch(err) {
         		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
   				if (currentBuild.result == 'UNSTABLE')
