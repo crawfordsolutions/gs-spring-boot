@@ -26,19 +26,4 @@ public class HelloControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
-
-	@Test
-	public void whenDerivedExceptionThrown_thenAssertionSucceds() {
-	    Exception exception = assertThrows(RuntimeException.class, () -> {
-	        Integer.parseInt("1a");
-	    });
-	 
-	    String expectedMessage = "For input string";
-	    String actualMessage = exception.getMessage();
-	 
-	    assertTrue(actualMessage.contains(expectedMessage));
-	}
 }
-
-
-
