@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,16 +27,10 @@ public class HelloControllerTest {
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
 
-	@Test
-	public void whenExceptionThrown_thenAssertionSucceeds() {
-	    Exception exception = assertThrows(NumberFormatException.class, () -> {
-	        Integer.parseInt("1a");
-	    });
-	 
-	    String expectedMessage = "For input string";
-	    String actualMessage = exception.getMessage();
-	 
-	    assertTrue(actualMessage.contains(expectedMessage));
+	@Test(expected = NullPointerException.class)
+	public void whenExceptionThrown_thenExpectationSatisfied() {
+	    String test = null;
+	    test.length();
 	}
 }
 
