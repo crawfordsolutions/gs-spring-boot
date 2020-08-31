@@ -41,7 +41,7 @@ node {
 				])
 		}
 	       
-		stage "Compile"
+		stage ('Compile') {
 
 			try {
 				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
@@ -50,8 +50,8 @@ node {
 			echo err.getMessage()
         	currentBuild.result = 'FAILURE'
 			}
-
-		stage "Test"
+}
+		stage ('Test') {
 
 			 try {
         		sh 'mvn test -B'
@@ -61,8 +61,8 @@ node {
     			currentBuild.result = 'FAILURE'
   				throw err
 			}
-
-		stage "Package"
+		}
+		stage ('Package') {
 
 			try {
 				def mvnHome = '/Users/main/work/apache-maven-3.6.3'
@@ -71,7 +71,9 @@ node {
 			echo err.getMessage()
         	currentBuild.result = 'FAILURE'
 			}
+		}
 }
+
 			 
 			 
 			//  try {
