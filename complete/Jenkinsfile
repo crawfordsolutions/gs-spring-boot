@@ -58,7 +58,7 @@ node {
 				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
     } catch (NullPointerException | ArithmeticException | ArrayIndexOutOfBoundsException err) {
 	//} catch (Exception err) {
-	echo "Caught: ${err}"
+	echo "Exception Caught is: ${err}"
 	currentBuild.result = 'FAILURE'
 	//echo err.getMessage()
 	} finally {
