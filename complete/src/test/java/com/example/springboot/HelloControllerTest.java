@@ -27,11 +27,11 @@ public class HelloControllerTest {
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void whenExceptionThrown_thenExpectationSatisfied() {
-	    String test = null;
-	    test.length();
-	}
+	// @Test(expected = NullPointerException.class)
+	// public void whenExceptionThrown_thenExpectationSatisfied() {
+	//     String test = null;
+	//     test.length();
+	// }
 }
 
 
