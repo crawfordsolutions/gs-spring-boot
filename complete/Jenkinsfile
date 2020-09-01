@@ -58,13 +58,14 @@ node {
 				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
     } catch (NullPointerException | ArithmeticException | ArrayIndexOutOfBoundsException err) {
 	//} catch (Exception err) {
-	echo "Exception Caught is: ${err}"
-	currentBuild.result = 'FAILURE'
+	//echo "Exception Caught is: ${err}"
+	//currentBuild.result = 'FAILURE'
 	//echo err.getMessage()
+	error "Build failed due to exception {$err}"
 	} finally {
 		//echo hudson.AbortException
-      		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-	}
+    	step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+		}
 	}
 // node {
 //     try {

@@ -26,11 +26,4 @@ public class HelloControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
-	@Test
-	public void main(String[] args) {
-        Object obj = null;
-        obj.hashCode();
-    }
-
-
 }
