@@ -56,7 +56,7 @@ node {
         // Any maven phase that that triggers the test phase can be used here.
     			def mvnHome = '/Users/main/work/apache-maven-3.6.3'
 				sh "${mvnHome}/bin/mvn -f complete/pom.xml verify -B"
-    } catch (NullPointerException | ArithmeticException | ArrayIndexOutOfBoundsException err) {
+    } catch (Exception | NullPointerException | ArithmeticException | ArrayIndexOutOfBoundsException err) {
 	//} catch (Exception err) {
 	//echo "Exception Caught is: ${err}"
 	//currentBuild.result = 'FAILURE'
