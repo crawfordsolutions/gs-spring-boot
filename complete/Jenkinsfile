@@ -61,7 +61,7 @@ node {
 	//echo "Exception Caught is: ${err}"
 	//currentBuild.result = 'FAILURE'
 	//echo err.getMessage()
-	error "Build failed due to exception {$err}"
+	error "Build failed due to caught exception {$err}"
 	} finally {
 		//echo hudson.AbortException
     	step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
