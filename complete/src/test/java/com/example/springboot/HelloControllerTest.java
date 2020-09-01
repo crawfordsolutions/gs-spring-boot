@@ -29,20 +29,4 @@ public class HelloControllerTest {
 				.andExpect(content().string(equalTo("Greetings from Spring Boot!")));
 	}
 
-
-	
-		@Test(expected = NullPointerException.class)
-		public void testNullPointerException()
-		{
-			String name = getName();
-			System.out.println(name.length());
-		}
-		
-		private String getName()
-		{
-			return null;
-		}
-	
-
-
 }
